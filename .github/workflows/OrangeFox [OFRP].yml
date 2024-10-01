@@ -72,39 +72,15 @@ jobs:
         git clone https://gitlab.com/OrangeFox/misc/scripts
         cd scripts
         sudo bash setup/android_build_env.sh
-<<<<<<< HEAD
-      
-    - name: Set-up Manifest
-      run: |
-        mkdir -p ${GITHUB_WORKSPACE}/OrangeFox
-        cd ${GITHUB_WORKSPACE}/OrangeFox
-        git config --global user.name "lazycodebuilder"
-        git config --global user.email "154446636+lazycodebuilder@users.noreply.github.com"
-        git clone https://github.com/momo54181/ofrp-sync.git
-        if [ ${{ inputs.MANIFEST_BRANCH }} == '11.0' ] || [ ${{ inputs.MANIFEST_BRANCH }} == '12.1' ]; then
-            echo "Sync fox_${{ inputs.MANIFEST_BRANCH }} branch"
-            echo "CHECK_LEGACY_BRANCH=false" >> $GITHUB_ENV
-            cd ofrp-sync
-            chmod 777 orangefox_sync.sh
-            ./orangefox_sync.sh --branch ${{ inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
-        else
-            echo "Sync legacy fox_${{ inputs.MANIFEST_BRANCH }} branch"
-            echo "CHECK_LEGACY_BRANCH=true" >> $GITHUB_ENV
-            cd ofrp-sync
-            chmod 777 orangefox_sync.sh
-            ./orangefox_sync.sh --branch ${{ inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
-        fi
-=======
         sed -i 's/cd -/cd ../g' setup/install_android_sdk.sh
         sudo bash setup/install_android_sdk.sh
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
->>>>>>> parent of 8ccc3cb (Update OrangeFox [OFRP].yml)
 
     - name: Sync OrangeFox sources and minimal manifest
       run: |
         cd ${{ steps.pwd.outputs.workspace-folder }}
         git clone ${{ github.event.inputs.SYNC_URL }}
-        cd sync
+        cd ofrp-sync
         chmod 777 orangefox_sync.sh
         ./orangefox_sync.sh --branch ${{ github.event.inputs.MANIFEST_BRANCH }} --path ${{ steps.pwd.outputs.workspace-folder }}/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}

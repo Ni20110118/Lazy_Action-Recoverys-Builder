@@ -90,11 +90,13 @@ jobs:
             echo "Sync fox_${{ inputs.MANIFEST_BRANCH }} branch"
             echo "CHECK_LEGACY_BRANCH=false" >> $GITHUB_ENV
             cd ofrp-sync
+            chmod 777 orangefox_sync.sh
             ./orangefox_sync.sh --branch ${{ inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
         else
             echo "Sync legacy fox_${{ inputs.MANIFEST_BRANCH }} branch"
             echo "CHECK_LEGACY_BRANCH=true" >> $GITHUB_ENV
             cd ofrp-sync
+            chmod 777 orangefox_sync.sh
             ./orangefox_sync.sh --branch ${{ inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}
         fi
 
